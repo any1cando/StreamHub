@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StreamHub</string>
+    <string name="auth_title">Войти в Стримчан</string>
 </resources>

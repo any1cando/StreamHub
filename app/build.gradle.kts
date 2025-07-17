@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android") version "2.0.21"
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -34,10 +35,15 @@ android {
         viewBinding = true
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.12" // актуально на июль 2025
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }

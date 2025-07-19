@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">StreamHub</string>
     <string name="auth_title">Войти в Стримчан</string>
+    <string name="auth_username_title">Введите имя пользователя</string>
+    <string name="auth_username_input">Имя пользователя</string>
+    <string name="reg_password_title">Введите пароль пользователя</string>
+    <string name="reg_password_input">Пароль пользователя</string>
+    <string name="auth_text_button">Войти</string>
+    <string name="auth_username_text_error">Имя пользователя не может быть пустым</string>
+    <string name="auth_password_text_error">Пароль должен быть больше 6 символов</string>
+
 </resources>

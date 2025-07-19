@@ -17,13 +17,13 @@ import com.panevrn.streamhub.ui.theme.Black
 import com.panevrn.streamhub.ui.theme.MyComposeTheme
 
 @Composable
-fun TitleText(text: String, modifier: Modifier = Modifier) {
+fun TitleText(modifier: Modifier = Modifier, text: String, align: TextAlign = TextAlign.Center) {
     Text(
         modifier = modifier,
         text = text,
         color = Black,
         fontSize = 28.sp,
         fontWeight = FontWeight.SemiBold,
-        textAlign = TextAlign.Center
+        textAlign = align
     )
 }

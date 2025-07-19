@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.panevrn.streamhub.R
@@ -21,7 +22,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MainScreenAuth(
-                modifier = Modifier.fillMaxSize().padding(WindowInsets.safeDrawing.asPaddingValues())  // Теперь ничего не вылезет за экран
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(WindowInsets.safeDrawing.asPaddingValues())  // Теперь ничего не вылезет за экран
+                    .padding(top = 32.dp, bottom = 32.dp, start = 16.dp, end = 16.dp)
             )
         }
     }

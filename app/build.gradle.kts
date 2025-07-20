@@ -54,6 +54,10 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":data"))
 
+    // Compose календарь
+    implementation("com.kizitonwose.calendar:compose:2.2.0")
+    implementation("androidx.compose.material:material-icons-extended:1.6.1")
+
     // Compose BOM
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))
 

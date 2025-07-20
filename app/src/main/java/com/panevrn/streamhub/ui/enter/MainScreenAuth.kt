@@ -1,10 +1,10 @@
-package com.panevrn.streamhub.ui.auth
+package com.panevrn.streamhub.ui.enter
 
-import androidx.compose.foundation.layout.Arrangement
+
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.panevrn.streamhub.ui.elements.BlackButton
+import com.panevrn.streamhub.ui.elements.ClickableText
 import com.panevrn.streamhub.ui.elements.TitleInputField
 import com.panevrn.streamhub.ui.elements.TitleText
 
@@ -27,20 +28,13 @@ import com.panevrn.streamhub.ui.elements.TitleText
 @Composable
 fun MainScreenAuth(modifier: Modifier = Modifier.fillMaxSize()) {
 
-    var username by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var usernameAuth by remember { mutableStateOf("") }
+    var passwordAuth by remember { mutableStateOf("") }
 
-    var usernameError by remember { mutableStateOf(false) }
-    var passwordError by remember { mutableStateOf(false) }
+    var usernameErrorAuth by remember { mutableStateOf(false) }
+    var passwordErrorAuth by remember { mutableStateOf(false) }
 
     Box(modifier = modifier) {
-
-//        TitleText(
-//            modifier = Modifier.fillMaxWidth(),
-//            text = stringResource(R.string.auth_title)
-//        )
-//
-//        Spacer(Modifier.height(144.dp))
 
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -57,12 +51,12 @@ fun MainScreenAuth(modifier: Modifier = Modifier.fillMaxSize()) {
                 modifier = Modifier.fillMaxWidth(),
                 titleText = stringResource(R.string.auth_username_title),
                 labelInputText = stringResource(R.string.auth_username_input),
-                value = username,
+                value = usernameAuth,
                 onValueChange = {
-                    username = it
-                    usernameError = false
+                    usernameAuth = it
+                    usernameErrorAuth = false
                 },
-                isError = usernameError,
+                isError = usernameErrorAuth,
                 errorText = stringResource(R.string.auth_username_text_error)
             )
 
@@ -72,16 +66,32 @@ fun MainScreenAuth(modifier: Modifier = Modifier.fillMaxSize()) {
                 modifier = Modifier.fillMaxWidth(),
                 titleText = stringResource(R.string.reg_password_title),
                 labelInputText = stringResource(R.string.reg_password_input),
-                value = password,
+                value = passwordAuth,
                 onValueChange = {
-                    password = it
-                    passwordError = false
+                    passwordAuth = it
+                    passwordErrorAuth = false
                 },
-                isError = passwordError,
+                isError = passwordErrorAuth,
                 errorText = stringResource(R.string.auth_password_text_error)
             )
 
-            // TODO: Доделать две тексто-кнопки "Забыл пароль" + "Регистрация"
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row() {
+                ClickableText(
+                    modifier = Modifier.padding(4.dp),
+                    text = stringResource(R.string.auth_forgot_password)
+                ) {
+                    // TODO: Доделать клик на "Забыл пароль"
+                }
+
+                ClickableText(
+                    modifier = Modifier.padding(4.dp),
+                    text = stringResource(R.string.auth_go_to_reg)
+                ) {
+                    // TODO: Доделать клик на "Регистрация" (переход на экран Регистрации)
+                }
+            }
 
             Spacer(modifier = Modifier.weight(1f))
 
@@ -91,10 +101,10 @@ fun MainScreenAuth(modifier: Modifier = Modifier.fillMaxSize()) {
                     .height(48.dp),
                 textButton = stringResource(R.string.auth_text_button),
                 onClick = {
-                    usernameError = username.isBlank()
-                    passwordError = password.length < 6
+                    usernameErrorAuth = usernameAuth.isBlank()
+                    passwordErrorAuth = passwordAuth.length < 6
 
-                    if (!usernameError && !passwordError) {
+                    if (!usernameErrorAuth && !passwordErrorAuth) {
                         // TODO: Доделать успешный вход
                     }
                 }

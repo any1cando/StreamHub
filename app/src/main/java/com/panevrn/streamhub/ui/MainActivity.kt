@@ -18,7 +18,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainScreenReg(
+            MainScreenAuth(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(WindowInsets.safeDrawing.asPaddingValues())  // Теперь ничего не вылезет за экран

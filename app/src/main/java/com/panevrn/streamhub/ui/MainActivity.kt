@@ -10,14 +10,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.panevrn.streamhub.ui.enter.MainRegistrationScreen
+import com.panevrn.streamhub.ui.enter.MainScreenReg
 import com.panevrn.streamhub.ui.enter.MainScreenAuth
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MainRegistrationScreen(
+            MainScreenReg(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(WindowInsets.safeDrawing.asPaddingValues())  // Теперь ничего не вылезет за экран

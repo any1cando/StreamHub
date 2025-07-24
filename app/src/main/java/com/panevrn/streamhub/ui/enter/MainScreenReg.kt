@@ -33,7 +33,7 @@ import com.panevrn.streamhub.ui.elements.PhoneInputField
 
 
 @Composable
-fun MainRegistrationScreen(modifier: Modifier = Modifier) {
+fun MainScreenReg(modifier: Modifier = Modifier) {
 
     var usernameReg by remember { mutableStateOf("") }
     var passwordReg by remember { mutableStateOf("") }

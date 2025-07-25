@@ -30,16 +30,20 @@ import com.panevrn.streamhub.R
 import com.panevrn.streamhub.ui.elements.BlackButton
 import com.panevrn.streamhub.ui.elements.ClickableText
 import com.panevrn.streamhub.ui.elements.PhoneInputField
+import com.panevrn.streamhub.ui.state.RegisterUiState
 
 
 @Composable
-fun MainScreenReg(modifier: Modifier = Modifier) {
-
-    var usernameReg by remember { mutableStateOf("") }
-    var passwordReg by remember { mutableStateOf("") }
-    var emailReg by remember { mutableStateOf("") }
-
-    var birthDate by remember { mutableStateOf<LocalDate?>(null) }
+fun MainScreenReg(
+    modifier: Modifier = Modifier,
+    uiState: RegisterUiState,
+    onUsernameChanged: (String) -> Unit,
+    onPasswordChanged: (String) -> Unit,
+    onEmailChanged: (String) -> Unit,
+    onBirthdayChanged: (LocalDate?) -> Unit,
+    onPhoneChanged: (String) -> Unit,
+    onSubmit: () -> Unit
+) {
 
     Box(modifier = modifier) {
         Column(
@@ -53,8 +57,8 @@ fun MainScreenReg(modifier: Modifier = Modifier) {
             TitleInputField(
                 titleText = stringResource(R.string.auth_username_title),
                 labelInputText = stringResource(R.string.auth_username_input),
-                value = usernameReg,
-                onValueChange = {}
+                value = uiState.username,
+                onValueChange = onUsernameChanged
             )
 
             Spacer(Modifier.height(24.dp))
@@ -62,8 +66,8 @@ fun MainScreenReg(modifier: Modifier = Modifier) {
             TitleInputField(
                 titleText = stringResource(R.string.reg_password_title),
                 labelInputText = stringResource(R.string.reg_password_input),
-                value = passwordReg,
-                onValueChange = {}
+                value = uiState.password,
+                onValueChange = onPasswordChanged
             )
 
             Spacer(Modifier.height(24.dp))
@@ -79,8 +83,8 @@ fun MainScreenReg(modifier: Modifier = Modifier) {
             Spacer(modifier = Modifier.height(12.dp))
 
             BirthdayPicker(
-                selectedDate = birthDate,
-                onDateSelected = { birthDate = it }
+                selectedDate = uiState.birthDate,
+                onDateSelected = onBirthdayChanged
             )
 
             Spacer(Modifier.height(24.dp))
@@ -88,8 +92,8 @@ fun MainScreenReg(modifier: Modifier = Modifier) {
             TitleInputField(
                 titleText = stringResource(R.string.reg_email_title),
                 labelInputText = stringResource(R.string.reg_email_input),
-                value = emailReg,
-                onValueChange = {}
+                value = uiState.email,
+                onValueChange = onEmailChanged
             )
 
             Spacer(Modifier.height(24.dp))
@@ -116,14 +120,8 @@ fun MainScreenReg(modifier: Modifier = Modifier) {
                     .fillMaxWidth()
                     .height(48.dp),
                 textButton = stringResource(R.string.auth_text_button),
-                onClick = {
-//                    usernameErrorAuth = usernameAuth.isBlank()
-//                    passwordErrorAuth = passwordAuth.length < 6
-//
-//                    if (!usernameErrorAuth && !passwordErrorAuth) {
-//                        // TODO: Доделать успешный вход
-//                    }
-                }
+                onClick = onSubmit,
+                enabled = !uiState.isLoading
             )
 
         }

@@ -18,7 +18,8 @@ import com.panevrn.streamhub.ui.theme.White
 fun BlackButton(
     modifier: Modifier = Modifier.fillMaxWidth().height(48.dp),
     textButton: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    enabled: Boolean
 ) {
     Button(
         modifier = modifier,
@@ -27,7 +28,8 @@ fun BlackButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = BlackButton,
             contentColor = White
-        )
+        ),
+        enabled = enabled
     ) {
         Text(text = textButton, fontSize = 18.sp)
     }

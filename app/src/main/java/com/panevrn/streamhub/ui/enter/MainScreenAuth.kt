@@ -1,6 +1,7 @@
 package com.panevrn.streamhub.ui.enter
 
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import com.panevrn.streamhub.R
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.panevrn.streamhub.ui.elements.BlackButton
@@ -30,6 +32,8 @@ fun MainScreenAuth(
     onPasswordChange: (String) -> Unit,
     onSubmit: () -> Unit
 ) {
+
+    val context = LocalContext.current
 
     Box(modifier = modifier) {
 
@@ -50,8 +54,8 @@ fun MainScreenAuth(
                 labelInputText = stringResource(R.string.auth_username_input),
                 value = uiState.email,
                 onValueChange = onUsernameChange,
-                isError = uiState.usernameError,
-                errorText = stringResource(R.string.auth_username_text_error)
+                isError = uiState.emailError,
+                errorText = uiState.errorEmailMessage
             )
 
             Spacer(Modifier.height(48.dp))
@@ -63,7 +67,7 @@ fun MainScreenAuth(
                 value = uiState.password,
                 onValueChange = onPasswordChange,
                 isError = uiState.passwordError,
-                errorText = stringResource(R.string.auth_password_text_error)
+                errorText = uiState.errorPasswordMessage
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -74,6 +78,7 @@ fun MainScreenAuth(
                     text = stringResource(R.string.auth_forgot_password)
                 ) {
                     // TODO: Доделать клик на "Забыл пароль"
+                    Toast.makeText(context, "Клик на 'Забыл пароль'", Toast.LENGTH_LONG).show()
                 }
 
                 ClickableText(
@@ -81,6 +86,7 @@ fun MainScreenAuth(
                     text = stringResource(R.string.auth_go_to_reg)
                 ) {
                     // TODO: Доделать клик на "Регистрация" (переход на экран Регистрации)
+                    Toast.makeText(context, "Клик на 'Регистрация'", Toast.LENGTH_LONG).show()
                 }
             }
 

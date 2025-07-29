@@ -16,7 +16,7 @@ class AuthViewModel: ViewModel() {
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
 
     fun onEmailChanged(newInput: String) {
-        _uiState.update { it.copy(email = newInput, usernameError = false) }
+        _uiState.update { it.copy(email = newInput, emailError = false) }
     }
 
     fun onPasswordChanged(newInput: String) {
@@ -24,23 +24,40 @@ class AuthViewModel: ViewModel() {
     }
 
     fun onSubmit() {
-        val value = _uiState.value
-        val usernameError = false  // TODO: Сделать валидацию на почту
-        val passwordError = false  // TODO: Сделать валидацию на пароль
 
-        if (usernameError || passwordError) {
-            _uiState.update {
-                it.copy(usernameError = usernameError, passwordError = passwordError)
-                return
-            }
-        }
+        // Проверяем на валидацию почту, пароль
+        validateEmail(_uiState.value.email)
+        validatePassword(_uiState.value.password)
 
+        // Проверяем флаги от проверок
+        if (_uiState.value.emailError || _uiState.value.passwordError) { return }
+
+        // Запускаем корутину
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, errorMessage = null) }
+            _uiState.update { it.copy(isLoading = true, errorEmailMessage = null, errorPasswordMessage = null) }
 
             // TODO: Сделать обработку UseCase - LoginUseCase
+
+            // После того, как мы успешно получаем ответ от сервера, делаем кнопку снова активной
+            _uiState.update { it.copy(isLoading = false) }
         }
 
+    }
+
+    private fun validateEmail(email: String) {
+        when {
+            email.isBlank() -> _uiState.update { it.copy(emailError = true, errorEmailMessage = "Email не может быть пустой") }
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+                .matches() -> _uiState.update { it.copy(emailError = true, errorEmailMessage = "Email должен выглядеть как email!") }
+            else -> _uiState.update { it.copy(emailError = false, errorEmailMessage = null) }
+        }
+    }
+
+    private fun validatePassword(password: String) {
+        when {
+            password.length < 5 -> _uiState.update { it.copy(passwordError = true, errorPasswordMessage = "Пароль должен содержать минимум 5 символов") }
+            else -> _uiState.update { it.copy(passwordError = false, errorPasswordMessage = null) }
+        }
     }
 
 }

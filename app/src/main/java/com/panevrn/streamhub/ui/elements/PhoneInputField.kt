@@ -28,11 +28,12 @@ import com.panevrn.streamhub.ui.theme.RedError
 
 
 @Composable
-fun PhoneInputField(modifier: Modifier = Modifier) {
-
-    var phoneNumber by remember { mutableStateOf("") }
-    var isError by remember { mutableStateOf(false) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+fun PhoneInputField(
+    modifier: Modifier = Modifier,
+    value: String,
+    onPhoneChanged: (String) -> Unit,
+    isError: Boolean = false,
+    errorText: String = "Ошибка"){
 
     Column(modifier = modifier) {
         Text(
@@ -46,21 +47,10 @@ fun PhoneInputField(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
-            value = phoneNumber,
-            onValueChange = { inputValue ->
-                val digitsOnly = inputValue.filter { it.isDigit() }
-                // Проверка: если есть нецифровые символы
-                isError = inputValue.any { !it.isDigit() }
-
-                errorMessage = when {
-                    digitsOnly.isEmpty() -> "Поле не может быть пустым"
-                    digitsOnly.length > 11 -> "Номер не может быть больше 11 цифр"
-                    else -> null
-                }
-                phoneNumber = digitsOnly.take(11)
-            },
-            isError = errorMessage != null,
+            value = value,
+            onValueChange = onPhoneChanged,
             label = { Text("Номер телефона") },
+            isError = isError,
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             modifier = Modifier
                 .fillMaxWidth()
@@ -72,15 +62,8 @@ fun PhoneInputField(modifier: Modifier = Modifier) {
             ),
             shape = RoundedCornerShape(8.dp)
         )
-        if (!errorMessage.isNullOrBlank()) {
-            Text(
-                text = errorMessage!!,
-                color = RedError,
-                fontSize = 14.sp,
-                modifier = Modifier
-                    .padding(top = 8.dp)
-                    .fillMaxWidth()
-            )
+        if (isError && errorText != null) {
+            Text(modifier = Modifier.padding(top = 8.dp), text = errorText, color = RedError, fontSize = 14.sp)
         }
     }
 }

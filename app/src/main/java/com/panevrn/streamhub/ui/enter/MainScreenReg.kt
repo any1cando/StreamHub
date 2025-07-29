@@ -98,7 +98,10 @@ fun MainScreenReg(
 
             Spacer(Modifier.height(24.dp))
 
-            PhoneInputField()
+            PhoneInputField(
+                value = uiState.phone,
+                onPhoneChanged = onPhoneChanged
+            )
 
             Spacer(Modifier.height(20.dp))
 

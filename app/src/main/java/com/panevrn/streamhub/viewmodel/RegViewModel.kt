@@ -1,6 +1,5 @@
-package com.panevrn.streamhub.ui.viewmodel
+package com.panevrn.streamhub.viewmodel
 
-import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import com.panevrn.streamhub.ui.state.RegisterUiState
 import kotlinx.coroutines.flow.MutableStateFlow

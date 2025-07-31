@@ -1,16 +1,22 @@
-package com.panevrn.streamhub.ui.viewmodel
+package com.panevrn.streamhub.viewmodel
 
+import android.util.Patterns
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.panevrn.domain.usecase.LoginUseCase
 import com.panevrn.streamhub.ui.state.AuthUiState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class AuthViewModel: ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor(
+    private val loginUseCase: LoginUseCase
+): ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
     val uiState: StateFlow<AuthUiState> = _uiState.asStateFlow()
@@ -25,9 +31,12 @@ class AuthViewModel: ViewModel() {
 
     fun onSubmit() {
 
+        val email = _uiState.value.email
+        val password = _uiState.value.password
+
         // Проверяем на валидацию почту, пароль
-        validateEmail(_uiState.value.email)
-        validatePassword(_uiState.value.password)
+        validateEmail(email)
+        validatePassword(password)
 
         // Проверяем флаги от проверок
         if (_uiState.value.emailError || _uiState.value.passwordError) { return }
@@ -36,10 +45,13 @@ class AuthViewModel: ViewModel() {
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true, errorEmailMessage = null, errorPasswordMessage = null) }
 
-            // TODO: Сделать обработку UseCase - LoginUseCase
+            // TODO: Сделать прогрузку загружающегося спиннера
+            val result = loginUseCase(email, password)
 
             // После того, как мы успешно получаем ответ от сервера, делаем кнопку снова активной
             _uiState.update { it.copy(isLoading = false) }
+
+
         }
 
     }
@@ -47,7 +59,7 @@ class AuthViewModel: ViewModel() {
     private fun validateEmail(email: String) {
         when {
             email.isBlank() -> _uiState.update { it.copy(emailError = true, errorEmailMessage = "Email не может быть пустой") }
-            !android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+            !Patterns.EMAIL_ADDRESS.matcher(email)
                 .matches() -> _uiState.update { it.copy(emailError = true, errorEmailMessage = "Email должен выглядеть как email!") }
             else -> _uiState.update { it.copy(emailError = false, errorEmailMessage = null) }
         }

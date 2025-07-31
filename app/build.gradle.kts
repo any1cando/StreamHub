@@ -1,5 +1,5 @@
 plugins {
-    id("com.android.application") version "8.11.1"
+    id("com.android.application") version "8.9.2"
     id("org.jetbrains.kotlin.android") version "2.0.21"
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
@@ -61,6 +61,8 @@ dependencies {
     // Compose BOM
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))
 
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
     // Базовые модули
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.material3:material3")
@@ -69,6 +71,9 @@ dependencies {
 
     // Retrofit core
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
+
+    // OkHttp
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
     // Добавить еще потом ViewModel (для Compose)
 

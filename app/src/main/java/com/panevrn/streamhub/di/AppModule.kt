@@ -1,11 +1,12 @@
 package com.panevrn.streamhub.di
 
 import com.google.gson.Gson
-import com.panevrn.data.mapper.LoginResponseMapper
+import com.panevrn.data.mapper.EnterResponseMapper
 import com.panevrn.data.network.EnterApi
 import com.panevrn.data.repositoryimpl.EnterRepositoryImpl
 import com.panevrn.domain.repository.EnterRepository
 import com.panevrn.domain.usecase.LoginUseCase
+import com.panevrn.domain.usecase.RegisterUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-    private const val BASE_URL = "http://10.0.2.2:8080/"
+    private const val BASE_URL = "http://10.0.2.2:8081/"
 
     // --- Network deps -----------------------------------
 
@@ -59,11 +60,15 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideEnterRepository(api: EnterApi, gson: Gson, mapper: LoginResponseMapper): EnterRepository =
+    fun provideEnterRepository(api: EnterApi, gson: Gson, mapper: EnterResponseMapper): EnterRepository =
         EnterRepositoryImpl(api, gson, mapper)
 
 
     @Provides
     @Singleton
     fun provideLoginUseCase(repo: EnterRepository): LoginUseCase = LoginUseCase(repo)
+
+    @Provides
+    @Singleton
+    fun provideRegisterUseCase(repo: EnterRepository): RegisterUseCase = RegisterUseCase(repo)
 }
